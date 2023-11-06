@@ -2,48 +2,10 @@ import random
 
 # create the suit array
 suits = ["Hearts", "Diamonds", "Spades", "Clubs"]
-
 # create the rank array
 ranks = ["Ace", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Jack", "Queen", "King"]
-
 # create a values dictionary to easily test to see if ranks are face or not
 values = {"Two": 2, "Three": 3, "Four": 4, "Five": 5, "Six": 6, "Seven": 7, "Eight": 8, "Nine": 9, "Ten": 10, "Jack": 11, "Queen": 12, "King": 13, "Ace": 14}
-
-class Card:
-    # when a card is instantiated, we want a suit and rank to be provided, the value will be automatically assigned via a dictionary
-    def __init__(self, rank, suit):
-        self.suit = suit
-        self.rank = rank
-        self.value = values[rank]
-    
-    # create a string method for easy understanding for a user
-    def __str__(self):
-        return f"{self.rank} of {self.suit}"
-
-class Deck:
-    # create a deck of 52 unique cards
-    def __init__(self):
-        self.all_cards = []
-        for suit in suits:
-            for rank in ranks:
-                self.all_cards.append(Card(rank, suit))
-    # enable shuffling of the deck
-    def shuffle(self):
-        random.shuffle(self.all_cards)
-    # enable dealing of a card from the deck
-    def deal_card(self):
-        return self.all_cards.pop()
-
-# define the play function, which asks if someone wants to play again
-def play():
-    while True:
-        try:
-            play_again = input("Do you want to play again? Enter Y/N ")
-            if play_again.lower() in ['y', 'n']:
-                return play_again
-        except ValueError:
-            print("Please input Y or N")
-            continue
                 
 def main():
     # print intro statements
@@ -142,12 +104,47 @@ def main():
                 game_on = False
         # check if the user wants to play again
         answer = play()
-        if answer.lower() == 'y':
+        if answer == 'y':
             on = True   
-        elif answer.lower() == 'n':
+        elif answer == 'n':
             print("Thanks for playing!")
             on = False
 
+class Card:
+    # when a card is instantiated, we want a suit and rank to be provided, the value will be automatically assigned via a dictionary
+    def __init__(self, rank, suit):
+        self.suit = suit
+        self.rank = rank
+        self.value = values[rank]
+    
+    # create a string method for easy understanding for a user
+    def __str__(self):
+        return f"{self.rank} of {self.suit}"
+
+class Deck:
+    # create a deck of 52 unique cards
+    def __init__(self):
+        self.all_cards = []
+        for suit in suits:
+            for rank in ranks:
+                self.all_cards.append(Card(rank, suit))
+    # enable shuffling of the deck
+    def shuffle(self):
+        random.shuffle(self.all_cards)
+    # enable dealing of a card from the deck
+    def deal_card(self):
+        return self.all_cards.pop()
+
+# define the play function, which asks if someone wants to play again
+def play():
+    while True:
+        try:
+            play_again = input("Do you want to play again? Enter Y/N ").lower()
+            if play_again in ['y', 'n']:
+                return play_again
+        except ValueError:
+            print("Please input Y or N")
+            continue
 
 if __name__ == "__main__":
     main()
